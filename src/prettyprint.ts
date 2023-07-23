@@ -11,7 +11,6 @@ export function format(
     closeTagSameLine = true,
     groupAttrsByTypes = true,
     firstAttrOnTagLine = true): string {
-
     const rawHtmlParser = new HtmlParser();
     const htmlParser = new I18NHtmlParser(rawHtmlParser);
     const expressionParser = new Parser(new Lexer());
@@ -192,7 +191,12 @@ export function format(
         const iikoStyleShortNames: string[] = [];
         const others: string[] = [];
 
-        const classNames = classNamesStr.trim().split(' ');
+        const classNames = classNamesStr
+        .replace(new RegExp('\r\n', 'g'), ' ')
+        .replace(new RegExp('\n', 'g'), ' ')
+        .replace(new RegExp('[ ]{1,}', 'g'), ' ')
+        .trim()
+        .split(' ');
 
         classNames.forEach(className => {
             if(iikoStyleClassesSet.has(className)) {
@@ -284,9 +288,9 @@ export function format(
             const identStr = firstAttrOnTagLine
                 ? getIndent(indent) + new Array(tagIdentLength).fill(' ').join('')
                 : getIndent(indent + 1);
-            let prefix = attrNewLines && !firstAttr
-                ? '\n' + identStr
-                : ' ';
+            let prefix = !attrNewLines || firstAttrOnTagLine && firstAttr
+                ? ' '
+                : '\n' + identStr;
             pretty.push(prefix + attribute.name);
             if (attribute.value.length) {
                 let value = attribute.name === 'class'

@@ -2,7 +2,7 @@
 	"name": "iiko-angular-template-formatter",
 	"displayName": "IIKO angular template formatter",
 	"description": "Auto format Angular html templates",
-	"version": "1.0.0",
+	"version": "1.0.3",
 	"publisher": "timergalin",
 	"engines": {
 		"vscode": "^1.10.0"
@@ -21,36 +21,39 @@
 	"main": "./out/src/extension",
 	"scripts": {
 		"vscode:prepublish": "tsc -p ./",
-		"compile": "tsc -watch -p ./",
 		"postinstall": "node ./node_modules/vscode/bin/install",
+		"webpack": "webpack --mode development",
+		"webpack-dev": "webpack --mode development --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"publish": "vsce publish",
 		"test": "node ./node_modules/vscode/bin/test"
 	},
 	"contributes": {
 		"configuration": {
 			"type": "object",
-			"title": "Angular template formatter configuration",
+			"title": "IIKO angular template formatter",
 			"properties": {
-				"angular-template-formatter.indentWidth": {
+				"conf.indentWidth": {
 					"type": "number",
 					"default": 2,
 					"description": "Number of spaces to indent"
 				},
-				"angular-template-formatter.useSpaces": {
+				"conf.useSpaces": {
 					"type": "boolean",
 					"default": true,
 					"description": "Use spaces or tabs for indentation (False will ignore indentWidth)"
 				},
-				"angular-template-formatter.closeTagSameLine": {
+				"conf.closeTagSameLine": {
 					"type": "boolean",
 					"default": true,
 					"description": "Never place the closing tag '>' on a new line."
 				},
-				"angular-template-formatter.groupAttrsByTypes": {
+				"conf.groupAttrsByTypes": {
 					"type": "boolean",
 					"default": true,
 					"description": "Group attrs by their types and split groups with an empty line."
 				},
-				"angular-template-formatter.firstAttrOnTagLine": {
+				"conf.firstAttrOnTagLine": {
 					"type": "boolean",
 					"default": true,
 					"description": "Always place first attr nearby its tag."
@@ -59,14 +62,17 @@
 		}
 	},
 	"devDependencies": {
-		"vscode": "^1.0.0",
-		"typescript": "^2.0.3",
-		"mocha": "^2.3.3",
+		"@types/commander": "2.9.0",
 		"@types/jasmine": "^2.5.38",
 		"@types/node": "6.0.46",
-		"@types/commander": "2.9.0",
 		"commander": "2.9.0",
-		"jasmine": "^2.5.2"
+		"jasmine": "^2.5.2",
+		"mocha": "^2.3.3",
+		"ts-loader": "^9.4.4",
+		"typescript": "^5.1.6",
+		"vscode": "^1.0.0",
+		"webpack": "^5.88.2",
+		"webpack-cli": "^5.1.4"
 	},
 	"dependencies": {
 		"@angular/compiler": "4.1.1",

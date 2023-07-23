@@ -7,7 +7,7 @@ const VALID_LANG: DocumentSelector = 'html';
 export function activate(context: ExtensionContext) {
     const editProvider = new EditProvider();
 
-    console.log('angular template formatter: activated');
+    console.log('iiko angular template formatter: activated');
 
     context.subscriptions.push(
         languages.registerDocumentFormattingEditProvider(VALID_LANG, editProvider)
